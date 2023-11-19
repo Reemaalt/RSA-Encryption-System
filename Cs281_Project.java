@@ -15,7 +15,7 @@ public class Cs281_Project {
             System.out.println("(2) Miller-Rabin Primality Test");
             System.out.println("(3) RSA Key Generation");
             System.out.println("(4) Encryption and decryption and modular arithmetic operations");
-            System.out.println("(5) Exit");
+            System.out.println("(5) Exit ");
             int option;
             while(true)
             {
