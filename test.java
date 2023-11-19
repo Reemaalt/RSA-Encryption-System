@@ -3,7 +3,7 @@ public class test {
         System.out.println("Asslamu Alikum");
                 System.out.println("Asslamu Alikum");
 
-                \\
+                
     /// gjkl;;
         System.out.println("Muhahaha");
                 //1
