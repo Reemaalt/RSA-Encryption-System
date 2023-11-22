@@ -12,7 +12,19 @@ public class RSAEncryption {
         String str = "hello" ;
         System.out.println("setting plaintext to: "+str);
         System.out.println("calling encrypt...");
+        encrypt(str,n ,e);
         
+        System.out.println("calling decrypt on encrypt output...");
+        decrypt(encrypt(str,n ,e),d,n);
+
+        System.out.println("making sure decryptedText and plaintext are equalsIgnoreCase...  ");
+        if(str.equals(decrypt(encrypt(str,n ,e),d,n)))
+            System.out.println("Yes! they are");
+        else
+            System.out.println("No! they aren't");
+            
+        System.out.println("bye now! --main method");
+
     }
 //---------------------------------------------------------------------------//Linear Congruential Generator
     public static int[] LCG(int seed, int quantity) {
@@ -106,7 +118,8 @@ public class RSAEncryption {
     
 //---------------------------------------------------------------------------// RSA Key Generation
     private static long n;
-
+    private static long e;
+    private static long d;
     // Getter method for n
     public static long getN() {
         return n;
@@ -136,14 +149,14 @@ public class RSAEncryption {
         long phi = (p - 1) * (q - 1);
         System.out.println("I calculated phi:" + phi);
         // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1 
-        long e;
+
         do {
             e = random.nextInt((int) phi - 2) + 2; //Ensure 1 < e < φ(n)
 
         } while (e <= 1 || gcd(e, phi) != 1);
         System.out.println("I set e:"+e);
         // Step 5: Compute private exponent d using the extendedEuclideanAlgorithm
-        long d = extendedEuclideanAlgorithm(e, phi);
+        d = extendedEuclideanAlgorithm(e, phi);
         System.out.println("I called extendedEuclideanAlgorithm, and got d to be:"+d);
         // Return the public and private keys
         System.out.println("finally, I am creating an instance of KeyPair class as:\n"
@@ -187,24 +200,39 @@ public class RSAEncryption {
 
 //---------------------------------------------------------------------------//Encryption and decryption and modular arithmetic operations
     static long[] encrypt(String message, long e, long n) {
+        System.out.println("Hi there! This is encrypt method");
         long[] intArray = string_to_intArray(message);
+        System.out.println("converting my string to int:");
+        for(int i = 0 ; i < intArray.length ; i++)
+            System.out.print(intArray[i]+"   ");
         long[] encrypted = new long[intArray.length];
-
+        System.out.println("\nencryptedValues:");
+        
         for (int i = 0; i < intArray.length; i++) {
             encrypted[i] = modularExponentiation(intArray[i], e, n);
         }
-
+        for(int i = 0 ; i < encrypted.length ; i++)
+            System.out.print(encrypted[i]+"   ");
+        System.out.println("\nbye now! --encrypt method");
         return encrypted;
     }
 
     static String decrypt(long[] ciphertext, long d, long n) {
+        System.out.println("Hi there! This is encrypt method\n" + 
+                "converting my string to int:");
+        for(int i = 0 ; i < ciphertext.length ; i++)
+            System.out.print(ciphertext[i]+"   ");
         long[] decryptedInts = new long[ciphertext.length];
 
         for (int i = 0; i < ciphertext.length; i++) {
             decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
         }
-      String decrypted =   Array_to_String(decryptedInts);
-
+        System.out.println("encryptedValues:");
+        for(int i = 0 ; i<decryptedInts.length ; i++)
+            System.out.print(decryptedInts[i]+"   ");
+        String decrypted =   Array_to_String(decryptedInts);
+        System.out.println("ArrayToString: "+ decrypted);
+        System.out.println("\nbye now! --encrypt method");
         return decrypted ; 
     }
 
