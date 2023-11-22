@@ -67,7 +67,13 @@ private static final SecureRandom random = new SecureRandom();
         return ans; 
     }
 
-static long n;
+    private static long n;
+
+    // Getter method for n
+    public static long getN() {
+        return n;
+    }
+    
     public static KeyPair generateKeys() {
        
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
@@ -86,7 +92,8 @@ static long n;
         // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1 
         long e;
         do {
-            e = random.nextLong() & Long.MAX_VALUE % phi; // Ensure 1 < e < φ(n)
+            e = random.nextInt((int) phi - 2) + 2; //Ensure 1 < e < φ(n)
+
         } while (e <= 1 || gcd(e, phi) != 1);
 
         // Step 5: Compute private exponent d using the extendedEuclideanAlgorithm
@@ -124,11 +131,12 @@ static long n;
         char current = str.charAt(i);
         if (current >= 'a' && current <= 'z') {
             intArray[i] = current - 'a' + 1;
-        }  else if (current >= 'A' && current <= 'Z') {
-            intArray[i] = current - 'A' + 1;
-        }else {
-            intArray[i] = -1;
+        } else if (current >= 'A' && current <= 'Z') {
+            intArray[i] = current - 'A' + 27; // Adjust for the uppercase letters
+        } else {
+            intArray[i] = 0;  // Use 0 for non-alphabetic characters
         }
+        
     }
     return intArray;
 }

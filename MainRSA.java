@@ -14,13 +14,13 @@ public class MainRSA {
 
         // Step 2: Encrypt a message using the public key
         String message = "Hello, RSA!";
-        long[] encryptedMessage = RSAEncryption.encrypt(message, publicKey, RSAEncryption.n);
+        long[] encryptedMessage = RSAEncryption.encrypt(message, publicKey, keyPair.getN());
 
         // Display the encrypted message
         System.out.println("Encrypted Message: " + RSAEncryption.Array_to_String(encryptedMessage));
 
         // Step 3: Decrypt the message using the private key
-        String decryptedMessage = RSAEncryption.decrypt(encryptedMessage, privateKey, RSAEncryption.n);
+        String decryptedMessage = RSAEncryption.decrypt(encryptedMessage, privateKey, keyPair.getN());
         
 
         // Display the decrypted message
