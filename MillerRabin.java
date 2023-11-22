@@ -38,7 +38,7 @@ public class MillerRabin {
 
     public static void main(String[] args)
     {
-        System.out.println(millerRabinTest(71, 40));
+        System.out.println(millerRabinTest(8, 40));
     }
 
     private static int getRandomInt(int min, int max)
