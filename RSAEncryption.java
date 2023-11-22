@@ -103,14 +103,15 @@ public class RSAEncryption {
         }
         return ans; 
     }
-
+    
+//---------------------------------------------------------------------------// RSA Key Generation
     private static long n;
 
     // Getter method for n
     public static long getN() {
         return n;
     }
-//---------------------------------------------------------------------------// RSA Key Generation
+
     public static KeyPair generateKeys() {
        
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
@@ -148,7 +149,8 @@ public class RSAEncryption {
         System.out.println("finally, I am creating an instance of KeyPair class as:\n"
         + "KeyPair(new PublicKey(n, e), new PrivateKey(n, d))\n"
         + "and returning it. Bye now! --generateKeys method");
-        return new KeyPair(new PublicKey(n,e), new PrivateKey(n,d));
+
+        return new KeyPair(new PublicKey(n,e),new PrivateKey(n,d));
     } 
     
     private static long gcd(long a, long b) {
