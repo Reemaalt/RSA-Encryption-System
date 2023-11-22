@@ -56,20 +56,18 @@ public class RSAEncryption {
     }
 
     public static int[] isprime (int[]a , int q ){
-      int[]b =new int[q]; 
-     for (int i=0; i<q;i++){
-        b[i]=a[i];
-     }
-       int[]ans=new int[q];
-       int k=0;
-     for(int j=0; j<q; j++){
-
-      if( millerRabinTest(b[j], 40)){
-        ans[k++]=b[j];
-    }
-    }
-     
-       return ans; 
+        int[]b =new int[q]; 
+        for (int i=0; i<q;i++){
+            b[i]=a[i];
+        }
+        int[]ans=new int[q];
+        int k=0;
+        for(int j=0; j<q; j++){
+            if( millerRabinTest(b[j], 40)){
+                ans[k++]=b[j];
+            }
+        }
+        return ans; 
     }
 
     public static KeyPair generateKeys() {
@@ -77,8 +75,8 @@ public class RSAEncryption {
 
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
        
-        int[] a =LCG(1024, 2);  
-        int[] b= isprime (a,4) ;
+        int[] a =LCG(1024, 20);  
+        int[] b= isprime (a,20) ;
         long p = b[0];
         long q = b[1];
 
