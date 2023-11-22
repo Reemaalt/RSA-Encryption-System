@@ -3,7 +3,9 @@ public class MillerRabin {
 
     private static final SecureRandom random = new SecureRandom();
 
-    public static boolean singleTest(long n, int a) {
+    public static boolean composite(long n, int a)
+    {//this tests checks if n is composite and returns true
+        //if it's probably prime it returns false
         long exp = n - 1;//assuming n is prime n-1 is even
 
         while (exp % 2 == 0) //trying to make exp an odd number
@@ -11,34 +13,37 @@ public class MillerRabin {
             exp >>= 1;
         }
 
-        if (power(a, exp, n) == 1) //modular exponintion is a^exp ≡1(modn)
-        {
+        if (power(a, exp, n) == 1) //modular exponentiation is a^exp ≡ 1(mod n)
+        {//≡ 1(mod n) ->> composite
             return true;//it's composite
         }
 
-        while (exp < n - 1) {
-            if (power(a, exp, n) == n - 1) {
+        while (exp < n - 1)
+        {
+            if (power(a, exp, n) == n - 1)//same as saying a^exp ≡ -1(mod n)
+            {
                 return true;
             }
-            exp <<= 1;
+            exp <<= 1;//doubling the exponent (squaring)
         }
 
         return false;
     }
 
     public static boolean millerRabinTest(long n, int k) {
-        for (int i = 0; i < k; i++) {
+        for (int i = 0; i < k; i++) //repeat test k times
+        {
             int a = getRandomInt(2, (int) (n - 1));
-            if (!singleTest(n, a)) {
+            if (!composite(n, a)) {
                 return false;
             }
         }
-        return true;
+        return true;//after checking 40 times there is 2^-80 possibility of error
     }
 
     public static void main(String[] args)
     {
-        System.out.println(millerRabinTest(8, 40));
+        System.out.println(millerRabinTest(341, 40));
     }
 
     private static int getRandomInt(int min, int max)
