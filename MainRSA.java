@@ -3,6 +3,7 @@
 public class MainRSA {
 
     public static void main(String[] args) {
+
         // Step 1: Generate RSA keys
         KeyPair keyPair = RSAEncryption.generateKeys();
         long publicKey = keyPair.getPublicKey();
@@ -14,14 +15,14 @@ public class MainRSA {
 
         // Step 2: Encrypt a message using the public key
         String message = "Hello, RSA!";
-        int[] encryptedMessage = RSAEncryption.encrypt(message, publicKey, RSAEncryption.n);
+        long[] encryptedMessage = RSAEncryption.encrypt(message, publicKey, RSAEncryption.n);
 
         // Display the encrypted message
-        System.out.println("Encrypted Message: " + RSAEncryption.IntArray_to_String(encryptedMessage));
+        System.out.println("Encrypted Message: " + RSAEncryption.Array_to_String(encryptedMessage));
 
         // Step 3: Decrypt the message using the private key
-        int[] decryptedIntArray = RSAEncryption.decrypt(encryptedMessage, privateKey, RSAEncryption.n);
-        String decryptedMessage = RSAEncryption.IntArray_to_String(decryptedIntArray);
+        String decryptedMessage = RSAEncryption.decrypt(encryptedMessage, privateKey, RSAEncryption.n);
+        
 
         // Display the decrypted message
         System.out.println("Decrypted Message: " + decryptedMessage);

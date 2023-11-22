@@ -3,7 +3,7 @@ import java.security.SecureRandom;
 
 public class RSAEncryption {
 
-    private static final SecureRandom random = new SecureRandom();
+private static final SecureRandom random = new SecureRandom();
 
     public static boolean singleTest(long n, int a) {
         long exp = n - 1;//assuming n is prime n-1 is even
@@ -38,15 +38,11 @@ public class RSAEncryption {
         return true;
     }
     
-
-    // Constants for the LCG formula
-    private static final int A = 1664525;
-    private static final int C = 1013904223;
-    static final long M = (int) Math.pow(2, 32);
-
-
     public static int[] LCG(int seed, int quantity) {
-        int[] result = new int[quantity];
+    final int A = 1664525;
+    final int C = 1013904223;
+    long M = (int) Math.pow(2, 32);
+    int[] result = new int[quantity];
 
         for (int i = 0; i < quantity; i++) {
             seed = (int) ((A * (long) seed + C) % M & Integer.MAX_VALUE);
@@ -71,9 +67,9 @@ public class RSAEncryption {
         return ans; 
     }
 
+static long n;
     public static KeyPair generateKeys() {
        
-
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
         int[] a =LCG(1024, 20);  
         int[] b= isprime (a,20) ;
@@ -81,7 +77,7 @@ public class RSAEncryption {
         long q = b[1];
 
         // Step 2: Compute n = p * q
-        long n = p * q;
+         n = p * q;
   
 
         // Step 3: Compute the totient of n, φ(n) = (p-1)(q-1)
@@ -100,8 +96,8 @@ public class RSAEncryption {
         return new KeyPair(e, d);
     } 
 
- static long[] encrypt(String message, long e, long n) {
-        int[] intArray = string_to_intArray(message);
+    static long[] encrypt(String message, long e, long n) {
+        long[] intArray = string_to_intArray(message);
         long[] encrypted = new long[intArray.length];
 
         for (int i = 0; i < intArray.length; i++) {
@@ -112,18 +108,18 @@ public class RSAEncryption {
     }
 
     static String decrypt(long[] ciphertext, long d, long n) {
-        int[] decryptedInts = new int[ciphertext.length];
+        long[] decryptedInts = new long[ciphertext.length];
 
         for (int i = 0; i < ciphertext.length; i++) {
             decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
         }
-      String decrypted =   IntArray_to_String(decryptedInts);
+      String decrypted =   Array_to_String(decryptedInts);
 
         return decrypted ; 
     }
 
-   static int[] string_to_intArray(String str) {
-    int[] intArray = new int[str.length()];
+    static long[] string_to_intArray(String str) {
+    long[] intArray = new long[str.length()];
     for (int i = 0; i < str.length(); i++) {
         char current = str.charAt(i);
         if (current >= 'a' && current <= 'z') {
@@ -137,10 +133,10 @@ public class RSAEncryption {
     return intArray;
 }
 
-static String IntArray_to_String(int[] intArray) {
+    static String Array_to_String(long[] intArray) {
     char[] charArray = new char[intArray.length];
     for (int i = 0; i < intArray.length; i++) {
-        int current = intArray[i];  
+        long current = intArray[i];  
         if (current >= 1 && current <= 26) {
             charArray[i] = (char) (current + 'a' - 1);
         } else if (current >= 27 && current <= 52) {
@@ -151,7 +147,6 @@ static String IntArray_to_String(int[] intArray) {
     }
     return new String(charArray);
 }
-
 
     static long modularExponentiation(long base, long exponent, long modulus) {
         long result = 1;
@@ -166,7 +161,6 @@ static String IntArray_to_String(int[] intArray) {
 
         return result ;
     }
-
 
     private static long gcd(long a, long b) {
         while (b != 0) {
@@ -208,6 +202,7 @@ static String IntArray_to_String(int[] intArray) {
 
         return result;
     }
+    
     private static int getRandomInt(int min, int max)
     {
         return random.nextInt(max - min + 1) + min;
