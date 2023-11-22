@@ -1,22 +1,40 @@
 //needed imports
-import java.math.BigInteger;
 import java.security.SecureRandom;
 
 public class RSAEncryption {
+
+    
+
+          // Constants for the LCG formula
+    private static final int A = 1664525;
+    private static final int C = 1013904223;
+    private static final long M = (int) Math.pow(2, 32);
+
+    public static int[] LCG(int seed, int quantity) {
+        int[] result = new int[quantity];
+
+        for (int i = 0; i < quantity; i++) {
+            seed = (int) ((A * (long) seed + C) % M & Integer.MAX_VALUE);
+            result[i] = seed;
+        }
+
+        return result; 
+    }
 
     public static KeyPair generateKeys() {
         SecureRandom random = new SecureRandom();
 
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
-        long p = int[] LCG(1024, random);
-        long q = int[] LCG(1024, random);
+        int[] a =LCG(1024, 2);      
+        long p = a[0];
+        long q = a[1];
 
         // Step 2: Compute n = p * q
         long n = p * q;
 
         // Step 3: Compute the totient of n, φ(n) = (p-1)(q-1)
         long phi = (p - 1) * (q - 1);
-//not sure
+
         // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1 
         long e;
         do {
