@@ -4,6 +4,11 @@ import java.security.SecureRandom;
 public class RSAEncryption {
 
 private static final SecureRandom random = new SecureRandom();
+private static long n;
+    // Getter method for n
+    public static long getN() {
+        return n;
+    }
 
     public static boolean singleTest(long n, int a) {
         long exp = n - 1;//assuming n is prime n-1 is even
@@ -39,9 +44,9 @@ private static final SecureRandom random = new SecureRandom();
     }
     
     public static int[] LCG(int seed, int quantity) {
-    final int A = 1664525;
-    final int C = 1013904223;
-    long M = (int) Math.pow(2, 32);
+    final long A = 1664525;
+    final long C = 1013904223;
+    long M = (long) Math.pow(2, 32);
     int[] result = new int[quantity];
 
         for (int i = 0; i < quantity; i++) {
@@ -52,12 +57,12 @@ private static final SecureRandom random = new SecureRandom();
         return result; 
     }
 
-    public static int[] isprime (int[]a , int q ){
+    public static long[] isprime (int[]a , int q ){
         int[]b =new int[q]; 
         for (int i=0; i<q;i++){
             b[i]=a[i];
         }
-        int[]ans=new int[q];
+        long[]ans=new long[q];
         int k=0;
         for(int j=0; j<q; j++){
             if( millerRabinTest(b[j], 40)){
@@ -67,20 +72,13 @@ private static final SecureRandom random = new SecureRandom();
         return ans; 
     }
 
-    private static long n;
-
-    // Getter method for n
-    public static long getN() {
-        return n;
-    }
-    
     public static KeyPair generateKeys() {
        
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
-        int[] a =LCG(1024, 20);  
-        int[] b= isprime (a,20) ;
-        long p = b[0];
-        long q = b[1];
+        int[] a =LCG(5, 100);  
+        long[] b= isprime (a,100) ;
+        long p = b[80];
+        long q = b[81];
 
         // Step 2: Compute n = p * q
          n = p * q;
@@ -89,12 +87,11 @@ private static final SecureRandom random = new SecureRandom();
         // Step 3: Compute the totient of n, φ(n) = (p-1)(q-1)
         long phi = (p - 1) * (q - 1);
 
-        // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1 
+        // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1
         long e;
         do {
-            e = random.nextInt((int) phi - 2) + 2; //Ensure 1 < e < φ(n)
-
-        } while (e <= 1 || gcd(e, phi) != 1);
+            e = generateRandomNumberInRange(2, phi - 1);
+        } while (gcd(e, phi) != 1);
 
         // Step 5: Compute private exponent d using the extendedEuclideanAlgorithm
         long d = extendedEuclideanAlgorithm(e, phi);
@@ -163,8 +160,8 @@ private static final SecureRandom random = new SecureRandom();
             if (exponent % 2 == 1) {
                 result = (result * base) % modulus;
             }
-            base = (base * base) % modulus;
-            exponent = exponent / 2;
+         base = (base * base) % modulus;
+        exponent >>= 1; // Use bitwise shift instead of division 
         }
 
         return result ;
@@ -216,6 +213,9 @@ private static final SecureRandom random = new SecureRandom();
         return random.nextInt(max - min + 1) + min;
     }
 
+    private static long generateRandomNumberInRange(long min, long max) {
+        return min + (long) (random.nextDouble() * (max - min + 1));
+    }
     
 }
 
