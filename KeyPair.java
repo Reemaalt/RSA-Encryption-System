@@ -1,18 +1,18 @@
 public class KeyPair {
     
-    private final PublicKey publicKey;
-    private final PrivateKey privateKey;
+    private final long publicKey;
+    private final long privateKey;
 
-    public KeyPair(PublicKey publicKey, PrivateKey privateKey) {
+    public KeyPair(long publicKey, long privateKey) {
         this.publicKey = publicKey;
         this.privateKey = privateKey;
     }
 
-    public PublicKey getPublicKey() {
+    public long getPublicKey() {
         return publicKey;
     }
 
-    public PrivateKey getPrivateKey() {
+    public long getPrivateKey() {
         return privateKey;
     }
 }
