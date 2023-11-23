@@ -120,7 +120,7 @@ private static long d;
         int[] a =LCG(5, 100); 
         System.out.println("back to generateKeys, now I will examin the random numbers and assign p to "
                 + "the first number that passes millerRabinTest");
-        System.out.println("q to the second number (if it is not equal to p");
+        System.out.println("q to the second number (if it is not equal to p... duh!)");
         long[] b= getPrimes (a,40) ;
         long p = b[6];
         long q = b[7];
@@ -186,17 +186,14 @@ private static long d;
 
         for (int i = 0; i < ciphertext.length; i++) {
         System.out.println("decryptedValues:");
-        
-        for(int j = 0 ; j<decryptedInts.length ; j++)
+        for(int i = 0 ; i<decryptedInts.length ; i++)
             System.out.print(decryptedInts[i]+"   ");
 
         System.out.println();
-        }
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
         System.out.println("bye now! --decrypt method");
-       
-        return decrypted;
+        return decrypted ;
 
     }
 
