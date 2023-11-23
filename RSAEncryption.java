@@ -180,24 +180,20 @@ private static long d;
     }
 
     static String decrypt(long[] ciphertext, long d, long n) {
-        System.out.println("Hi there! This is encrypt method\n" + 
-                "converting my string to int:");
-        for(int i = 0 ; i < ciphertext.length ; i++)
-            System.out.print(ciphertext[i]+"   ");
+        System.out.println("Hi there! This is decrypt method");
 
         long[] decryptedInts = new long[ciphertext.length];
 
         for (int i = 0; i < ciphertext.length; i++) {
-            decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
-        }
-
-        System.out.println("encryptedValues:");
+        System.out.println("decryptedValues:");
         for(int i = 0 ; i<decryptedInts.length ; i++)
             System.out.print(decryptedInts[i]+"   ");
+
+        System.out.println();
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
-        System.out.println("\nbye now! --encrypt method");
-        return decrypted ; 
+        System.out.println("bye now! --decrypt method");
+        return decrypted ;
 
     }
 
