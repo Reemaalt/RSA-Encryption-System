@@ -5,7 +5,7 @@ import java.util.Arrays;
 
 public class RSAEncryption {
 
-    public static void main(String[] args){
+/*     public static void main(String[] args){
         System.out.println("Hi there! This is the main method\ncalling generateKeys");
         KeyPair keyPair = generateKeys();
         
@@ -23,7 +23,43 @@ public class RSAEncryption {
             System.out.println("No! they aren't");
             
             System.out.println("bye now! --main method");
-    }
+    }*/
+    
+        public static void main(String[] args) {
+
+            // Step 1: Generate RSA keys
+            KeyPair keyPair = RSAEncryption.generateKeys();
+            long publicKey = keyPair.getPublicKey();
+            long privateKey = keyPair.getPrivateKey();
+            
+            //Display public and private keys
+            System.out.println("Public Key: " + publicKey);
+            System.out.println("Private Key: " + privateKey);
+            
+            // Step 2: Encrypt a message using the public key
+            String message = "Hello, RSA!";
+            long[] encryptedMessage = encrypt(message, keyPair.getPublicKey(), getN());
+            
+            // Display the encrypted message
+            System.out.println("Encrypted Message: " + RSAEncryption.Array_to_String(encryptedMessage));
+            
+            // Step 3: Decrypt the message using the private key
+            String decryptedMessage = decrypt(encryptedMessage, keyPair.getPrivateKey(), getN());
+            
+            // Display the decrypted message
+            System.out.println("Decrypted Message: " + decryptedMessage);
+
+            //cheak step
+             System.out.println("making sure decryptedText and plaintext are equalsIgnoreCase...  ");
+        if(message.equalsIgnoreCase(decryptedMessage))
+            System.out.println("Yes! they are");
+        else
+            System.out.println("No! they aren't");
+            
+            System.out.println("exit --main method");
+        }
+        
+    
 
 
 private static final SecureRandom random = new SecureRandom();
@@ -37,12 +73,12 @@ private static long d;
 
 //---------------------------------------------------------------------------//Linear Congruential Generator
  public static int[] LCG(int seed, int quantity) {
-        System.out.println("Hi there! This is LCG method, I am called with\n" +
+        System.out.println(" This is LCG method, I am called with\n" +
         "(seed="+seed +"  quantity="+quantity+")");
         final int A = 1664525;
         final int C = 1013904223;
         final long M = 32767;
-        System.out.println("and I have those initialized local variables:\n" +
+        System.out.println("and It have those initialized local variables:\n" +
         "(A = "+A+"  C = "+C+"  M = "+M+")");
         int[] result = new int[quantity];
         
@@ -50,12 +86,12 @@ private static long d;
             seed = (int) ((A * (long) seed + C) % M & Integer.MAX_VALUE);
             result[i] = seed;
         }
-        System.out.println("I generated "+quantity+" random numbers, and I made them all positives!");
+        System.out.println(" generating "+quantity+" random numbers");
         for(int i =0 ; i<9 ; i++){
             System.out.print(result[i]+",");
         }
         System.out.println("...");
-        System.out.println("bye now! --LCG method");
+        System.out.println("exit --LCG method");
         return result;  
     }
 
@@ -114,13 +150,13 @@ private static long d;
        
         // Step 1: Choose two large prime numbers, p and q i need to use the lcg method and then cheak that use Miller-Rabin Primality Test
        
-        System.out.println("Hi there! This is generateKeys method");
-        System.out.println("I will be generating 100 random numbers using LCG method\n" +
+        System.out.println("This is generateKeys method");
+        System.out.println("It will be generating 200 random numbers using LCG method\n" +
         "calling LCG...");
-        int[] a =LCG(5, 100); 
-        System.out.println("back to generateKeys, now I will examin the random numbers and assign p to "
+        int[] a =LCG(10, 200); 
+        System.out.println("back to generateKeys, now It will examin the random numbers and assign p to "
                 + "the first number that passes millerRabinTest");
-        System.out.println("q to the second number (if it is not equal to p");
+        System.out.println("q to the second number");
         long[] b= getPrimes (a,40) ;
         long p = b[6];
         long q = b[7];
@@ -133,24 +169,24 @@ private static long d;
 
         // Step 3: Compute the totient of n, φ(n) = (p-1)(q-1)
         long phi = (p - 1) * (q - 1);
-        System.out.println("I calculated phi:" + phi);
+        System.out.println("calculated phi:" + phi);
 
         // Step 4: Choose public exponent e such that 1 < e < φ(n) and gcd(e, φ(n)) = 1
         
         do {
             e = generateRandomNumberInRange(2, phi - 1);
         } while (gcd(e, phi) != 1);
-        System.out.println("I set e:"+e);
+        System.out.println(" set e:"+e);
 
         // Step 5: Compute private exponent d using the extendedEuclideanAlgorithm
         d = extendedEuclideanAlgorithm(e, phi);
-        System.out.println("I called extendedEuclideanAlgorithm, and got d to be:"+d);
+        System.out.println("It called extendedEuclideanAlgorithm, and got d to be:"+d);
 
         
 
-        System.out.println("finally, I am creating an instance of KeyPair class as:\n"
+        System.out.println("finally, creating an instance of KeyPair class as:\n"
         + "KeyPair(new PublicKey(n, e), new PrivateKey(n, d))\n"
-        + "and returning it. Bye now! --generateKeys method");
+        + "and returning it. exit --generateKeys method");
 
    // Return the public and private keys
         return new KeyPair(e, d);
@@ -158,9 +194,9 @@ private static long d;
     
 //---------------------------------------------------------------------------//Encryption and decryption and modular arithmetic operations
     static long[] encrypt(String message, long e, long n) {
-        System.out.println("Hi there! This is encrypt method");
+        System.out.println(" This is encrypt method");
         long[] intArray = string_to_intArray(message);
-        System.out.println("converting my string to int:");
+        System.out.println("converting the string to int:");
        
         for(int i = 0 ; i < intArray.length ; i++){
             System.out.print(intArray[i]+"   ");
@@ -175,12 +211,12 @@ private static long d;
         }
         for(int i = 0 ; i < encrypted.length ; i++)
         System.out.print(encrypted[i]+"   ");
-        System.out.println("\nbye now! --encrypt method");
+        System.out.println("\nexit --encrypt method");
         return encrypted;
     }
 
     static String decrypt(long[] ciphertext, long d, long n) {
-        System.out.println("Hi there! This is decrypt method");
+        System.out.println("This is decrypt method");
 
         long[] decryptedInts = new long[ciphertext.length];
 
@@ -194,7 +230,7 @@ private static long d;
         }
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
-        System.out.println("bye now! --decrypt method");
+        System.out.println("exit --decrypt method");
        
         return decrypted;
 
