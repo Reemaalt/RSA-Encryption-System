@@ -5,7 +5,7 @@ public class RSAEncryption {
 
 private static final SecureRandom random = new SecureRandom();
 private static long n;
-    // Getter method for n
+ // Getter method for n
     public static long getN() {
         return n;
     }
