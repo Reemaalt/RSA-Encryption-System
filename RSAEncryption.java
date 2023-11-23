@@ -1,26 +1,28 @@
 //needed imports
+
 import java.security.SecureRandom;
+import java.util.Arrays;
 
 public class RSAEncryption {
 
     public static void main(String[] args){
         System.out.println("Hi there! This is the main method\ncalling generateKeys");
-        generateKeys();
+        KeyPair keyPair = generateKeys();
         
         String str = "hello" ;
         System.out.println("setting plaintext to: "+str);
         System.out.println("calling encrypt...");
-        encrypt(str,n ,e);
+        long[] encryptedMessage = encrypt(str, keyPair.getPublicKey(), getN());
         
         System.out.println("calling decrypt on encrypt output...");
-        decrypt(encrypt(str,n ,e),d,n);
+        String decryptedMessage = decrypt(encryptedMessage, keyPair.getPrivateKey(), getN());
         System.out.println("making sure decryptedText and plaintext are equalsIgnoreCase...  ");
-        if(str.equals(decrypt(encrypt(str,n ,e),d,n)))
+        if(str.equalsIgnoreCase(decryptedMessage))
             System.out.println("Yes! they are");
         else
             System.out.println("No! they aren't");
             
-        System.out.println("bye now! --main method");
+            System.out.println("bye now! --main method");
     }
 
 
@@ -91,20 +93,22 @@ private static long d;
         return true;
     }
     
-    public static long[] isprime (int[]a , int q ){
-        int[]b =new int[q]; 
-        for (int i=0; i<q;i++){
-            b[i]=a[i];
-        }
-        long[]ans=new long[q];
-        int k=0;
-        for(int j=0; j<q; j++){
-            if( millerRabinTest(b[j], 40)){
-                ans[k++]=b[j];
+    public static long[] getPrimes(int[] candidates, int quantity) {
+    long[] primes = new long[quantity];
+    int count = 0;
+
+    for (int candidate : candidates) {
+        if (millerRabinTest(candidate, 40)) {
+            primes[count++] = candidate;
+            if (count == quantity) {
+                break;  // Found enough primes, exit loop
             }
         }
-        return ans; 
     }
+
+    return Arrays.copyOf(primes, count);  // Trim the array to the actual count
+}
+
 
 //---------------------------------------------------------------------------// RSA Key Generation
     public static KeyPair generateKeys() {
@@ -118,7 +122,7 @@ private static long d;
         System.out.println("back to generateKeys, now I will examin the random numbers and assign p to "
                 + "the first number that passes millerRabinTest");
         System.out.println("q to the second number (if it is not equal to p... duh!)");
-        long[] b= isprime (a,40) ;
+        long[] b= getPrimes (a,40) ;
         long p = b[6];
         long q = b[7];
         System.out.println("p is "+p+" the 7th element in the random list");
@@ -143,14 +147,14 @@ private static long d;
         d = extendedEuclideanAlgorithm(e, phi);
         System.out.println("I called extendedEuclideanAlgorithm, and got d to be:"+d);
 
-        // Return the public and private keys
-        return new KeyPair(e, d);
+        
 
         System.out.println("finally, I am creating an instance of KeyPair class as:\n"
         + "KeyPair(new PublicKey(n, e), new PrivateKey(n, d))\n"
         + "and returning it. Bye now! --generateKeys method");
-       
-        return new KeyPair(new PublicKey(n,e),new PrivateKey(n,d));
+
+   // Return the public and private keys
+        return new KeyPair(e, d);
     } 
     
 //---------------------------------------------------------------------------//Encryption and decryption and modular arithmetic operations
@@ -229,6 +233,7 @@ private static long d;
     return new String(charArray);
 }
 
+//other methods 
     static long modularExponentiation(long base, long exponent, long modulus) {
         long result = 1;
 
