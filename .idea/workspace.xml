@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="5dfd5480-4e85-4a7b-a23c-13462650bb4d" name="Changes" comment="added miller rabin primality test" />
+<<<<<<< Updated upstream
+    <list default="true" id="5dfd5480-4e85-4a7b-a23c-13462650bb4d" name="Changes" comment="edited decrypt method">
+=======
+    <list default="true" id="5dfd5480-4e85-4a7b-a23c-13462650bb4d" name="Changes" comment="added miller rabin primality test">
+>>>>>>> Stashed changes
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -28,16 +34,17 @@
     <property name="last_opened_file_path" value="$USER_HOME$/Desktop/INTELIJ_IS_RACIST/1445/281/Project" />
   </component>
   <component name="RunManager">
-    <configuration name="MillerRabin" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <option name="MAIN_CLASS_NAME" value="MillerRabin" />
-      <module name="RSA-Encryption-System" />
+    <configuration name="RSAEncryption" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
+      <option name="ALTERNATIVE_JRE_PATH" value="openjdk-21" />
+      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="true" />
+      <option name="MAIN_CLASS_NAME" value="RSAEncryption" />
       <method v="2">
         <option name="Make" enabled="true" />
       </method>
     </configuration>
     <recent_temporary>
       <list>
-        <item itemvalue="Application.MillerRabin" />
+        <item itemvalue="Application.RSAEncryption" />
       </list>
     </recent_temporary>
   </component>
@@ -70,6 +77,7 @@
     <MESSAGE value="laugh" />
     <MESSAGE value="Aicha's branch" />
     <MESSAGE value="added miller rabin primality test" />
-    <option name="LAST_COMMIT_MESSAGE" value="added miller rabin primality test" />
+    <MESSAGE value="edited decrypt method" />
+    <option name="LAST_COMMIT_MESSAGE" value="edited decrypt method" />
   </component>
 </project>

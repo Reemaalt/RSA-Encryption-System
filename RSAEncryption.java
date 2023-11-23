@@ -199,17 +199,19 @@ private static long d;
         
             long[] decryptedInts = new long[ciphertext.length];
         for (int i = 0; i < ciphertext.length; i++) {
-            decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
-        }
-      
-        System.out.println("decryptedValues:\n");
-        for(int i = 0 ; i<decryptedInts.length ; i++)
+        System.out.println("decryptedValues:");
+        
+        for(int j = 0 ; j<decryptedInts.length ; j++)
             System.out.print(decryptedInts[i]+"   ");
-            System.out.println();
+
+        System.out.println();
+        }
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
-        System.out.println("\nexit --encrypt method");
-        return decrypted ; 
+        System.out.println("bye now! --decrypt method");
+       
+        return decrypted;
+
     }
 
     static long[] string_to_intArray(String str) {
