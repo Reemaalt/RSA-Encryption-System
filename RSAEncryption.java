@@ -109,7 +109,6 @@ private static long d;
     return Arrays.copyOf(primes, count);  // Trim the array to the actual count
 }
 
-
 //---------------------------------------------------------------------------// RSA Key Generation
     public static KeyPair generateKeys() {
        
