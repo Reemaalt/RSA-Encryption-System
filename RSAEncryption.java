@@ -4,29 +4,10 @@ import java.security.SecureRandom;
 import java.util.Arrays;
 
 public class RSAEncryption {
-
-/*     public static void main(String[] args){
-        System.out.println("Hi there! This is the main method\ncalling generateKeys");
-        KeyPair keyPair = generateKeys();
-        
-        String str = "hello" ;
-        System.out.println("setting plaintext to: "+str);
-        System.out.println("calling encrypt...");
-        long[] encryptedMessage = encrypt(str, keyPair.getPublicKey(), getN());
-        
-        System.out.println("calling decrypt on encrypt output...");
-        String decryptedMessage = decrypt(encryptedMessage, keyPair.getPrivateKey(), getN());
-        System.out.println("making sure decryptedText and plaintext are equalsIgnoreCase...  ");
-        if(str.equalsIgnoreCase(decryptedMessage))
-            System.out.println("Yes! they are");
-        else
-            System.out.println("No! they aren't");
-            
-            System.out.println("bye now! --main method");
-    }*/
-    
         public static void main(String[] args) {
 
+             String message = "HelloRSA";
+             System.out.println("this program will perform RSAEncryption on this message: "+message);
             // Step 1: Generate RSA keys
             KeyPair keyPair = RSAEncryption.generateKeys();
             long publicKey = keyPair.getPublicKey();
@@ -37,7 +18,7 @@ public class RSAEncryption {
             System.out.println("Private Key: " + privateKey);
             
             // Step 2: Encrypt a message using the public key
-            String message = "Hello, RSA!";
+           
             long[] encryptedMessage = encrypt(message, keyPair.getPublicKey(), getN());
             
             // Display the encrypted message
@@ -59,8 +40,6 @@ public class RSAEncryption {
             System.out.println("exit --main method");
         }
         
-    
-
 
 private static final SecureRandom random = new SecureRandom();
 private static long n;
@@ -96,7 +75,7 @@ private static long d;
     }
 
 //---------------------------------------------------------------------------//Miller-Rabin Primality Test
-    public static boolean singleTest(long n, int a) {
+    public static boolean composite(long n, int a) {
         long exp = n - 1;//assuming n is prime n-1 is even
 
         while (exp % 2 == 0) //trying to make exp an odd number
@@ -104,13 +83,13 @@ private static long d;
             exp >>= 1;
         }
 
-        if (power(a, exp, n) == 1) //modular exponintion is a^exp ≡1(modn)
+        if (modularExponentiation(a, exp, n) == 1) //modular exponintion is a^exp ≡1(modn)
         {
             return true;//it's composite
         }
 
         while (exp < n - 1) {
-            if (power(a, exp, n) == n - 1) {
+            if (modularExponentiation(a, exp, n) == n - 1) {
                 return true;
             }
             exp <<= 1;
@@ -122,7 +101,7 @@ private static long d;
     public static boolean millerRabinTest(long n, int k) {
         for (int i = 0; i < k; i++) {
             int a = getRandomInt(2, (int) (n - 1));
-            if (!singleTest(n, a)) {
+            if (!composite(n, a)) {
                 return false;
             }
         }
@@ -216,24 +195,21 @@ private static long d;
     }
 
     static String decrypt(long[] ciphertext, long d, long n) {
-        System.out.println("This is decrypt method");
-
-        long[] decryptedInts = new long[ciphertext.length];
-
-        for (int i = 0; i < ciphertext.length; i++) {
-        System.out.println("decryptedValues:");
+        System.out.println("This is decrypt method\n");
         
-        for(int j = 0 ; j<decryptedInts.length ; j++)
-            System.out.print(decryptedInts[i]+"   ");
-
-        System.out.println();
+            long[] decryptedInts = new long[ciphertext.length];
+        for (int i = 0; i < ciphertext.length; i++) {
+            decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
         }
+      
+        System.out.println("decryptedValues:\n");
+        for(int i = 0 ; i<decryptedInts.length ; i++)
+            System.out.print(decryptedInts[i]+"   ");
+            System.out.println();
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
-        System.out.println("exit --decrypt method");
-       
-        return decrypted;
-
+        System.out.println("\nexit --encrypt method");
+        return decrypted ; 
     }
 
     static long[] string_to_intArray(String str) {
@@ -305,22 +281,6 @@ private static long d;
             x1 = temp;
         }
         return x0 < 0 ? x0 + m : x0;
-    }
-    
-    private static long power(long base, long exp, long mod)
-    {
-        long result = 1;
-        base = base % mod;
-
-        while (exp > 0) {
-            if (exp % 2 == 1) {
-                result = (result * base) % mod;
-            }
-            exp >>= 1;
-            base = (base * base) % mod;
-        }
-
-        return result;
     }
     
     private static int getRandomInt(int min, int max)
