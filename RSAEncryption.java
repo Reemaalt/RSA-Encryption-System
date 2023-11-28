@@ -197,18 +197,18 @@ private static long d;
     static String decrypt(long[] ciphertext, long d, long n) {
         System.out.println("This is decrypt method\n");
         
-            long[] decryptedInts = new long[ciphertext.length];
+        long[] decryptedInts = new long[ciphertext.length];
         for (int i = 0; i < ciphertext.length; i++) {
-        System.out.println("decryptedValues:");
-        
-        for(int j = 0 ; j<decryptedInts.length ; j++)
-            System.out.print(decryptedInts[i]+"   ");
-
-        System.out.println();
+            decryptedInts[i] = (int) modularExponentiation(ciphertext[i], d, n);
         }
+      
+        System.out.println("decryptedValues:\n");
+        for(int i = 0 ; i<decryptedInts.length ; i++)
+            System.out.print(decryptedInts[i]+"   ");
+            System.out.println();
         String decrypted =   Array_to_String(decryptedInts);
         System.out.println("ArrayToString: "+ decrypted);
-        System.out.println("bye now! --decrypt method");
+        System.out.println("exit --decrypt method");
        
         return decrypted;
 
